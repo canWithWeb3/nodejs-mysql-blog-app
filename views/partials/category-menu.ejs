@@ -1,0 +1,16 @@
+<div class="list-group">
+    <a 
+        href="/blogs" 
+        class="list-group-item list-group-item-action
+        <%= selectedCategory == null && "active" %>">
+            Tüm Kategoriler
+    </a>
+    <% categories.forEach(function(category) { %>
+        <a 
+            href="/blogs/category/<%= category.categoryid %>" 
+            class="list-group-item list-group-item-action
+            <%= (selectedCategory == category.categoryid) && "active" %>"> 
+                <%= category.name %>
+        </a>
+    <% }) %> 
+</div>
