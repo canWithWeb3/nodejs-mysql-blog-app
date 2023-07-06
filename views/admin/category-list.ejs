@@ -14,22 +14,18 @@
                     <thead>
                         <tr>
                             <th style="width: 50px;">id</th>
-                            <th style="width: 130px;">resim</th>
                             <th>baslik</th>
                             <th style="width: 130px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% blogs.forEach(blog => { %>
+                        <% categories.forEach(category => { %>
                             <tr>
-                                <td><%= blog.blogid %></td>
+                                <td><%= category.categoryid %></td>
+                                <td><%= category.name %></td>
                                 <td>
-                                    <img src="/static/images/<%= blog.resim %>" alt="" class="img-fluid">
-                                </td>
-                                <td><%= blog.baslik %></td>
-                                <td>
-                                    <a href="/admin/blogs/<%= blog.blogid %>" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="/admin/blogs/delete/<%= blog.blogid %>" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/admin/categories/<%= category.categoryid %>" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="/admin/categories/delete/<%= category.categoryid %>" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         <% }) %>

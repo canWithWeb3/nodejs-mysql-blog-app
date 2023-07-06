@@ -1,0 +1,7 @@
+.card{
+    overflow: hidden;
+}
+
+.ck-editor__editable_inline {
+    min-height: 290px;
+}
