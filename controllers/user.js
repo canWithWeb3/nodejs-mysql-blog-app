@@ -3,34 +3,6 @@ const Category = require("../models/category");
 
 const { Op } = require("sequelize")
 
-exports.blogs_by_category = async function(req, res) {
-    const slug = req.params.slug
-    try{
-        const blogs = await Blog.findAll({
-            where: {
-                onay: true
-            },
-            include: {
-                model: Category,
-                where: { url: slug }
-            },
-            raw: true
-        })
-        const categories = await Category.findAll({ raw: true })
-        // const [blogs, ] = await db.execute("SELECT * FROM blog WHERE categoryid=? AND onay=?", [id, 1])
-        // const [categories, ] = await db.execute("SELECT * FROM category")
-
-        res.render("users/blogs", {
-            title: "Tüm Kurslar",
-            blogs: blogs,
-            categories: categories,
-            selectedCategory: slug
-        });
-    }catch(err){
-        console.log(err)
-    }
-}
-
 exports.blogs_details = async function(req, res) {
 
     const slug = req.params.slug
@@ -56,16 +28,18 @@ exports.blogs_details = async function(req, res) {
 
 exports.blog_list = async function(req, res) {
     const size = 5
-    const { page = 1 } = req.query
+    const { page = 0 } = req.query
+    const slug = req.params.slug
 
     try{
-        const blogs = await Blog.findAll({
+        const {rows, count} = await Blog.findAndCountAll({
             where: {
-                onay: true
+                onay: {[Op.eq]: true},
             },
             raw: true,
+            include: slug && { model: Category, where: { url: slug } },
             limit: size,
-            offset: (page - 1) * 5
+            offset: page * 5
             // page == 1 => 0,
             // page == 2 => 5,
         })
@@ -73,7 +47,10 @@ exports.blog_list = async function(req, res) {
 
         res.render("users/blogs", {
             title: "Tüm Kurslar",
-            blogs: blogs,
+            blogs: rows,
+            totalItems: count,
+            totalPages: Math.ceil(count / size),
+            currentPage: page,
             categories: categories,
             selectedCategory: null
         });
