@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const User = require("../models/user")
-const emailService = require("../helpers/send-mail")
-const config = require("../config")
+// const emailService = require("../helpers/send-mail")
+// const config = require("../config")
 
 exports.get_logout = async (req, res) => {
     await req.session.destroy()
@@ -33,12 +33,12 @@ exports.post_register = async (req, res) => {
             password: hashedPassword
         })
 
-        await emailService.sendMail({
-            from: config.email.from,
-            to: newUser.email,
-            subject: "Hesabınız oluşturuldu",
-            text: "Hesabınız başarılı bir şekilde oluşturuldu"
-        })
+        // await emailService.sendMail({
+        //     from: config.email.from,
+        //     to: newUser.email,
+        //     subject: "Hesabınız oluşturuldu",
+        //     text: "Hesabınız başarılı bir şekilde oluşturuldu"
+        // })
         
         res.redirect("login")
     }catch(err){

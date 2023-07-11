@@ -1,11 +1,12 @@
 const mysql = require("mysql2")
-const config = require("../config")
+// const config = require("../config")
+require("dotenv").config()
 
 const Sequelize = require("sequelize")
 
-const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
+const sequelize = new Sequelize(process.env.DB_DBNAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     dialect: "mysql",
-    host: config.db.host,
+    host: process.env.DB_HOST,
     define: {
         timestamps: false
     },
